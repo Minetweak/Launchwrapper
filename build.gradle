@@ -9,15 +9,14 @@ repositories {
     mavenCentral()
 }
 
-group = 'net.minecraft'
+group = 'io.minetweak'
 archivesBaseName = 'launchwrapper'
-version = '1.11'
+version = '1.0-SNAPSHOT'
 sourceCompatibility = 1.6
 
 dependencies {
     compile 'net.sf.jopt-simple:jopt-simple:4.5'
     compile 'org.ow2.asm:asm-debug-all:5.0.3'
-    compile 'org.lwjgl.lwjgl:lwjgl:2.9.1'
     compile 'org.apache.logging.log4j:log4j-core:2.0-beta9'
     compile 'org.apache.logging.log4j:log4j-api:2.0-beta9'
 }
@@ -25,6 +24,10 @@ dependencies {
 task sourcesJar(type: Jar) {
     classifier = 'sources'
     from sourceSets.main.allSource
+}
+
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 }
 
 artifacts {
@@ -38,11 +41,15 @@ repoDir.mkdirs()
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: "file://" + repoDir.absolutePath)
+            configuration = configurations.archives
+
+            repository(url: 'http://nexus.directcode.org/nexus/content/repositories/snapshots/') {
+                authentication(userName: project.property('dcUsername'), password: project.property('dcPassword'))
+            }
 
             pom.project {
-                description 'Minecraft LegacyLauncher'
-                url 'http://github.com/Mojang/LegacyLauncher'
+                description 'Minecraft Launchwrapper'
+                url 'http://github.com/Minetweak/Launchwrapper/'
             }
         }
     }

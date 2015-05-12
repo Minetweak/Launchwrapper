@@ -2,7 +2,7 @@ package net.minecraft.launchwrapper.injector;
 
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraft.launchwrapper.Launch;
-import org.lwjgl.opengl.Display;
+//import org.lwjgl.opengl.Display;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Label;
@@ -93,10 +93,10 @@ public class VanillaTweakInjector implements IClassTransformer {
             final File smallIcon = new File(Launch.assetsDir, "icons/icon_16x16.png");
             final File bigIcon = new File(Launch.assetsDir, "icons/icon_32x32.png");
             System.out.println("Loading current icons for window from: " + smallIcon + " and " + bigIcon);
-            Display.setIcon(new ByteBuffer[]{
+            /*Display.setIcon(new ByteBuffer[]{
                     loadIcon(smallIcon),
                     loadIcon(bigIcon)
-            });
+            });*/
             Frame[] frames = Frame.getFrames();
 
             if (frames != null) {
